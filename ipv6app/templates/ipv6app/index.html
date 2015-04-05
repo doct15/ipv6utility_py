@@ -17,10 +17,9 @@
 <table cellspacing="0" cellpadding="1" border="0">
 <tr><td align="left" valign="top">
 
-<form method="post" action="/ipv6app/" name="formOptions" id="formOptions" class="formclass1">
-<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-<input type="text" name="inipv6address" id="inipv6address" value="{{ inipv6address }}" class="fieldspec">
-<p></p><input type="submit" name="doCalc" id="doCalc" value="Calculate">
+<form method="post" action="/ipv6app/" name="formOptions" id="formOptions" class="formclass1">{% csrf_token %}
+<input type="text" name="inipv6address" value="{{ inipv6address }}" class="fieldspec"></input>
+<p></p><input type="submit" name="doCalc" id="doCalc" value="Calculate"></input>
 </form>
 
 </p>

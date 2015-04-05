@@ -18,7 +18,7 @@ p {
 	margin-top: 0px; 
 	text-align: left;
 }
-.divoptions {
+.divOptions {
 	position: absolute;
 	top: 16px;
 	left: 22px;
@@ -56,7 +56,7 @@ p {
 }
 
 .fieldspec {
-	width: 300;
+	width: 300px;
 	border: 1px;
 	background-color: #ffff00;
 	color: #0000ff;

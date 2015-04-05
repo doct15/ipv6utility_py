@@ -7,6 +7,7 @@ from ipv6app.forms import formOptions
 from ipv6app.models import Prefix
 
 global htmltext
+global inipv6address
 global ipv6address
 global ipv6address_truncate
 global ipv6address_binary
@@ -26,33 +27,8 @@ global oipv6address_truncate
 global onetwork
 
 def custom_proc(request):
-    #context = RequestContext(request)
-    if request.method == 'POST':
-        inipv6address = request.POST['inipv6address']
-        myForm = formOptions(request.POST)
-    else:
-        inipv6address = "::"
-        myForm = formOptions()
-    #global chunk
-    #global octet
-    #global firstoctet
-    #global subnet
-    #currentchunk = 0
-    #currentchar = 0
-    #maxchunks = 0
-    #lastchar = ""
-    #chunk = []
-    #octet = []
-    #firstoctet = []
-    #details = ""
-    #nummasks = 0
-    #currentoctet = 0
-    #doublecolon = -1
-    #isglobal="unknown"
-    #interfaceID="unknown"
-    #linenumber = 0
-    
     global htmltext
+    global inipv6address
     global ipv6address
     global ipv6address_truncate
     global ipv6address_binary
@@ -70,7 +46,13 @@ def custom_proc(request):
     global oipv6address_binary
     global oipv6address_truncate
     global onetwork
-    
+    if request.method == 'POST':
+        inipv6address = request.POST['inipv6address']
+        myForm = formOptions(request.POST)
+    else:
+        inipv6address = "::"
+        myForm = formOptions()
+
     ipv6address = inipv6address
     ipv6address_truncate = ""
     ipv6address_binary = ""
@@ -81,8 +63,6 @@ def custom_proc(request):
     network = ""
     subnetmask = ""
     network_binary = ""
-    hexstring="0123456789ABCDEF"
-    binstring="0000z0001z0010z0011z0100z0101z0110z0111z1000z1001z1010z1011z1100z1101z1110z1111"
     htmltext = []
     
     htmltext.append(cc.starttable1+cc.startrow1+" Original Input"+cc.rowdivider1+inipv6address+cc.endrow1)
@@ -101,7 +81,7 @@ def custom_proc(request):
     onetwork                   = str(network)
 
     ztemp2=""
-    flag = hexstring.find(ipv6address_truncate[17:18])
+    flag = cc.hexstring.find(ipv6address_truncate[17:18])
     if (flag & 2):
         isglobal = "global"
     else:
@@ -137,7 +117,6 @@ def about(request):
     return HttpResponse("Brian says hello world!")
 
 def convertinput(inipv6address):
-    #clearall()
     global htmltext
     global ipv6address
     global ipv6address_truncate
@@ -176,7 +155,6 @@ def convertinput(inipv6address):
     currentchar = 0
     while (currentchar < len(convertstring)):
         zchar = convertstring[currentchar:currentchar+1]
-        print currentchar,zchar
         if zchar == ".":
             if chunk[currentchunk] == "":
                 alert('Bad ipv4 address embedding!')
@@ -192,7 +170,6 @@ def convertinput(inipv6address):
                 for ztemp in range (currentchar+1, len(convertstring)):
                     lastchar=zchar2
                     zchar2=convertstring[ztemp:ztemp+1]
-                    print " - ",ztemp,zchar2
                     if zchar2 == ".":
                         if chunk[currentchunk] == "":
                             alert('Bad ipv4 address embedding!')
@@ -215,14 +192,13 @@ def convertinput(inipv6address):
                 currentoctet += 1
                 zchar=zchar2
                 currentchar=ztemp
-                print octet[0], octet[1], octet[2], octet[3]
                 chunk[currentchunk]=(hex(int(octet[0])).split('x')[1]).zfill(2)+(hex(int(octet[1])).split('x')[1]).zfill(2)
                 currentchunk += 1
                 
                 if currentchunk>7:
                     alert('More than 8 chunks!')
                     return False
-                chunk[currentchunk]=(hex(int(octet[0])).split('x')[1]).zfill(2)+(hex(int(octet[2])).split('x')[3]).zfill(2)
+                chunk[currentchunk]=(hex(int(octet[2])).split('x')[1]).zfill(2)+(hex(int(octet[3])).split('x')[1]).zfill(2)
             if currentchar >= len(convertstring):
                 return True
         if zchar == "/":
@@ -281,8 +257,8 @@ def convertinput(inipv6address):
         while (len(chunk[currentchunk])<4):
             chunk[currentchunk]="0"+chunk[currentchunk]
     
-    ipv6address=chunk[0]+":"+chunk[1]+":"+chunk[2]+":"+chunk[3]+":"+chunk[4]+":"+chunk[5]+":"+chunk[6]+":"+chunk[7]
-    ipv6address_truncate=chunk[0]+chunk[1]+chunk[2]+chunk[3]+chunk[4]+chunk[5]+chunk[6]+chunk[7]
+    ipv6address=(chunk[0]+":"+chunk[1]+":"+chunk[2]+":"+chunk[3]+":"+chunk[4]+":"+chunk[5]+":"+chunk[6]+":"+chunk[7]).upper()
+    ipv6address_truncate=(chunk[0]+chunk[1]+chunk[2]+chunk[3]+chunk[4]+chunk[5]+chunk[6]+chunk[7]).upper()
     ipv4address_embedded=octet[0]+"."+octet[1]+"."+octet[2]+"."+octet[3]
     firstipv4address_embedded=firstoctet[0]+"."+firstoctet[1]+"."+firstoctet[2]+"."+firstoctet[3]
     ipv6address_binary=hexToBin(ipv6address_truncate)
@@ -296,27 +272,6 @@ def convertinput(inipv6address):
     ztemp=binToHex(network_binary)
     network=zchunk(ztemp)
     return True
-
-def clearall():
-    currentcunk = 0
-    currentchar = 0
-    maxchunks = 0
-    #lastchar = ""
-    doublecolon = -1
-    #subnet = 0
-    ipv6address = ""
-    ipv6address_truncate = ""
-    ipv6address_binary = ""
-    isglobal="unknown"
-    interfaceID="unknown"
-    #firstoctet=[]
-    #octet=[]
-    while (len(chunk)<9):
-        chunk.append("")
-    currentoctet = 0
-    while (len(firstoctet)<4):
-        firstoctet.append("")
-        octet.append("")
 
 def checkmasks():
     global htmltext
@@ -339,11 +294,8 @@ def checkmasks():
     global onetwork
 
     oipv6address_binary=ipv6address_binary
-    #ztemp=setdetails();
     details = Prefix.objects.all()
     htmltext.append(cc.startrow3+" Mask Mapping to reserved Addresses"+cc.endrow1)
-    #for (my $ztemp=0;1;$ztemp++)
-    #for ztemp in range (0,1):
     for detail in details:
         details_ip       = detail.ip
         details_mask     = detail.mask
@@ -383,11 +335,9 @@ def checkmasks():
             htmltext.append(cc.startrow1+details_ip+cc.rowdivider2+zchar+cc.rowdivider2+details_name+cc.endrow1)
             if details_flag == "6to4":
                 #6to4;
-                #v4addr=getv4(substr(oipv6address_truncate,4,8))
                 v4addr=getv4(oipv6address_truncate[4:12])
-                print oipv6address_truncate[4:12],v4addr
+                #islegal=""
                 istrue = isprivate(v4addr)
-                islegal=""
                 if istrue:
                     islegal="illegal"
                 else:
@@ -398,7 +348,6 @@ def checkmasks():
                     htmltext.append(cc.startrow2+"...6to4 Router v4"+cc.rowdivider2+v4addr+" - "+islegal+" for 6to4 site."+cc.endrow1)
             elif details_flag == "ISATAP":
                 #ISATAP;
-                #v4addr=getv4(substr($oipv6address_truncate,24,8))
                 v4addr=getv4(oipv6address_truncate[24:32])
                 istrue = isprivate(v4addr)
                 ispriv=""
@@ -409,22 +358,15 @@ def checkmasks():
                 htmltext.append(cc.startrow2+"...ISATAP host v4"+cc.rowdivider2+v4addr+" - "+ispriv+" ipv4 address."+cc.endrow1)
             elif details_flag == "EUI64":
                 #EUI-64;
-                #var interfaceID=oipv6address_truncate.substr(16,16);
-                #my $MAC48=substr($oipv6address_truncate,17,6).substr($oipv6address_truncate,26,6);
-                #my $flag=index($hexstring,substr($oipv6address_truncate,17,1));
-                #my $flag2=substr($hexstring,($flag ^ 2),1);
                 MAC48 = oipv6address_truncate[17:23]+oipv6address_truncate[26:32]
-                flag = hexstring.find(oipv6address_truncate[17:18])
-                flag2 = hexstring[flag^2:flag^2+1]
+                flag = cc.hexstring.find(oipv6address_truncate[17:18])
+                flag2 = cc.hexstring[flag^2:flag^2+1]
                 
-                #$MAC48 = substr($oipv6address_truncate,16,1) . $flag2 .":". substr($oipv6address_truncate,18,2) .":". substr($oipv6address_truncate,20,2) .":". substr($oipv6address_truncate,26,2) .":". substr($oipv6address_truncate,28,2) .":". substr($oipv6address_truncate,30,2);
                 MAC48 = oipv6address_truncate[16:17] + flag2 +":"+ oipv6address_truncate[18:20] +":"+ oipv6address_truncate[20:22] +":"+ oipv6address_truncate[26:28] +":"+ oipv6address_truncate[28:30] +":"+ oipv6address_truncate[30:32]
-                #print "$cc.startrow1...MAC 48$cc.rowdivider2 Possible$cc.rowdivider2$MAC48$cc.endrow1\n";
                 htmltext.append(cc.startrow1+"...MAC 48"+cc.rowdivider2+" Possible"+cc.rowdivider2+MAC48+cc.endrow1)
             elif details_flag == "SNM":
                 #Solicited Node Multicast
                 bit24=oipv6address_truncate[26:32]
-                #print "$cc.startrow1...24bits$cc.rowdivider1$bit24$cc.endrow1\n";
                 htmltext.append(cc.startrow1+"...24 bits"+cc.rowdivider1+bit24+cc.endrow1)
             elif details_flag == "v4compat":
                 #v4 compatible address
@@ -436,10 +378,8 @@ def checkmasks():
                 else:
                     ispriv="Public"
                 if v4addr == "0.0.0.0":
-                    #print "$cc.startrow2...v4 compatible v4$cc.rowdivider2$v4addr - NOT v4-compatible. $cc.endrow1\n";
                     htmltext.append(cc.startrow2+"...v4 compatible v4"+cc.rowdivider2+v4addr+" - NOT v4-compatible."+cc.endrow1)
                 else:
-                    #print "$cc.startrow2...v4 compatible v4$cc.rowdivider2$v4addr - $ispriv ipv4 address. $cc.endrow1\n";
                     htmltext.append(cc.startrow2+"...v4 compatible v4"+cc.rowdivider2+v4addr+" - "+ispriv+" ipv4 address."+cc.endrow1)
             elif details_flag == "v4map":
                 #v4 mapped address
@@ -450,25 +390,31 @@ def checkmasks():
                     ispriv="Private"
                 else:
                     ispriv="Public"
-                #print "$cc.startrow2...v4 mapped v4$cc.rowdivider2$v4addr - $ispriv ipv4 address. $cc.endrow1\n";
                 htmltext.append(cc.startrow2+"...v4 mapped v4"+cc.rowdivider2+v4addr+" - "+ispriv+" ipv4 address."+cc.endrow1)
             elif details_flag == "anyscope":
                 #anyscope multicast address
-                #print "$cc.startrow1$cc.rowdivider1...Above is anyscope multicast ff0X::\n";
                 htmltext.append(cc.startrow1+cc.rowdivider1+"...Above is anyscope multicast ff0X::")
 
-def isprivate(v4_address):
-    v4addr = v4_address
+def isprivate(v4addr):
     if (v4addr[0:2] == "10") or (v4addr[0:7] == "192.168") or (v4addr[0:6] == "172.16") or (v4addr == "0.0.0.0") or (v4addr[0:7] == "127.0.0") or (v4addr[0:15] == "255.255.255.255"):
-        return False
-    else:
         return True
+    else:
+        return False
 
 def alert(error_msg):
-    #errmsg = error_msg
-    print "ERROR! "+error_msg
-    print cc.end_html
-    quit()
+    global htmltext
+    global inipv6address
+    htmltext = []
+    print type(htmltext)
+    htmltext.append("Your Original Input "+inipv6address+" has an error.")
+    htmltext.append("ERROR! "+error_msg)
+    htmltext.append(cc.end_html)
+    #quit()
+    #return {
+    #    'inipv6address' : inipv6address,
+    #    'htmltext' : htmltext,
+    #}
+
 
 def binToHex(bin):
     ztemp3 = len(bin)
@@ -483,11 +429,13 @@ def binToHex(bin):
     return ztemp3
 
 def hexToBin(hex):
+    #hex = hex.upper()
     ztemp3=""
     for ztemp in range (0,len(hex)):
         zchar=hex[ztemp:ztemp+1]
         ztemp2=(cc.hexstring.find(zchar))*5
         ztemp3=ztemp3+cc.binstring[ztemp2:ztemp2+4]
+        #if hex[0:4]="2002C0"
     return ztemp3
 
 def zand(and1, and2):
@@ -495,7 +443,6 @@ def zand(and1, and2):
         alert("Can't AND non 128bit lengths!")
         return False
     ztemp3=""
-    #for (my $ztemp=0;$ztemp<length($and1);$ztemp++)
     for ztemp in range(0,len(and1)):
         ztemp2=""
         if and1[ztemp:ztemp+1] == and2[ztemp:ztemp+1]:
@@ -506,12 +453,10 @@ def zand(and1, and2):
     return ztemp3
 
 def zchunk(address):
-    #my $address=shift(@_);
     if (len(address) != 32):
         alert("Can't chunk non 32 hex string!")
         return False
     ztemp2=""
-    #for (my $ztemp=0;$ztemp<32;$ztemp=$ztemp+4)
     for ztemp in range(0,32,4):
         zchar=address[ztemp:ztemp+4]
         if ztemp>0:
@@ -520,12 +465,10 @@ def zchunk(address):
     return ztemp2
 
 def unchunk(address):
-    #my $address=shift(@_);
     if (len(address) != 39):
         alert("Can't unchunk non 39 hex string!")
         return False
     ztemp2=""
-    #for (my $ztemp=0;$ztemp<39;$ztemp=$ztemp+5)
     for ztemp in range (0,39,5):
         ztemp2=ztemp2+address[ztemp:4]
     return ztemp2
@@ -597,7 +540,6 @@ def maskanalyze():
         htmltext.append(cc.startrow4b+" /64 networks = 2<sup>"+str(ztemp)+"</sup>     = "+ztemp1+cc.endrow1)
 
 def comma(number):
-    #number=shift(@_);
     length=len(number)
     output=""
     if (length<3):
@@ -610,12 +552,9 @@ def comma(number):
     return output
 
 def getv4(hex):
-    #my $hex=shift(@_);
     if (len(hex) != 8):
         alert("Can't get IPv4 address from non 8 hex string!")
         return False
-    zchar=""
-    ztemp=0
     v4addr=""
     for ztemp in range (0,7,2):
         zchar=hexToOctet(hex[ztemp:ztemp+2])
@@ -625,12 +564,10 @@ def getv4(hex):
     return v4addr
     
 def hexToOctet(hex):
-    #my $hex=shift(@_);
+    #hex = hex.upper()
     if (len(hex) != 2):
         alert("Can't get octet from bad hex string!")
         return false
-    #high = index($hexstring,substr($hex,0,1)) * 16
-    #low = index($hexstring,substr($hex,1,1))
     high = cc.hexstring.find(hex[0:1]) * 16
     low = cc.hexstring.find(hex[1:2])
     ztemp3 = high + low
