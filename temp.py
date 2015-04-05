@@ -3,8 +3,8 @@ from django.http import HttpResponse
 from django.template import RequestContext, Context
 import constants as cc
 import re
-from ipv6app.forms import formOptions
-from ipv6app.models import Prefix
+#from ipv6app.forms import formOptions
+#from ipv6app.models import Prefix
 
 global htmltext
 global inipv6address
@@ -64,12 +64,8 @@ def custom_proc(request):
 
     response = convertinput(inipv6address)
     if not response:
-        #zalert('Bad Conversion.')
-        #We have failed. Send the html error and be done!
-        return {
-            'inipv6address' : inipv6address,
-            'htmltext' : htmltext,
-        }
+        zalert('Bad Conversion.')
+        return False
 
     oipv6address               = ipv6address
     oipv6address_truncate      = ipv6address_truncate
@@ -203,15 +199,9 @@ def convertinput(this_ipv6address):
             ztemp2=len(convertstring)-ztemp
             if ztemp2:
                 zchar = convertstring[ztemp+1:ztemp+1+ztemp2]
-                if not re.match(r'[0-9]+',zchar):
-                    zalert('Bad character in prefix!')
-                    return False
             else:
                 zchar="0"
             subnet = int(zchar)
-            
-            ###
-            
             currentchar = len(convertstring)+1
             if (subnet>128) or (subnet<0):
                 zalert('Bad prefix bits!')
@@ -272,11 +262,8 @@ def convertinput(this_ipv6address):
         subnetmask=subnetmask+"0"
 
     network_binary=zand(ipv6address_binary,subnetmask)
-    if not network_binary:
-        return False
-    #ztemp=binToHex(network_binary)
-    #network=zchunk(ztemp)
-    network = zchunk(binToHex(network_binary))
+    ztemp=binToHex(network_binary)
+    network=zchunk(ztemp)
     return True
 
 def checkmasks():
@@ -409,11 +396,14 @@ def isprivate(v4_address):
 def zalert(error_msg):
     global htmltext
     global inipv6address
-    htmltext.append('Your Original Input '+inipv6address+' has an error.  ERROR! '+error_msg+'<br>\n')
+    print "ERROR! "+error_msg
+    print type(htmltext)
+    htmltext.append('alert(Your Original Input '+inipv6address+' has an error.\nERROR! '+error_msg+')')
+    #quit()
     return False
 
 def binToHex(bin):
-    ztemp3 = len(str(bin))
+    ztemp3 = len(bin)
     if (((float(ztemp3) / 4) != int(ztemp3 / 4)) or (ztemp3 < 4) or (ztemp3 > 128)):
         zalert('Wrong bit length for hex conversion!')
         return False
@@ -447,7 +437,7 @@ def zand(and1, and2):
     return ztemp3
 
 def zchunk(address):
-    if (len(str(address)) != 32):
+    if (len(address) != 32):
         zalert("Can't chunk non 32 hex string!")
         return False
     ztemp2=""
