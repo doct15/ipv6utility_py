@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+<head>
+  <title>Brian McGehee IPv6 Address Utility</title>
+  <link rel="stylesheet" type="text/css" href="{% static "ipv6app/ipv6util.css" %}">
+  <meta name="Generator" content="Brian McGehee">
+  <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+  <meta name="description" content="Brian McGehee IPv6 Address Utility">
+  <meta name="keywords" content="Brian McGehee IPv6 Address Utility">
+  <meta name="robots" content="index,follow">
+</head>
+
+<body>
+<div class="divOptions">
+<fieldset><legend>Enter IPv6 Address</legend>
+<table cellspacing="0" cellpadding="1" border="0">
+<tr><td align="left" valign="top">
+
+<form method="post" action="/ipv6app/" name="formOptions" id="formOptions" class="formclass1">
+<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+<input type="text" name="inipv6address" id="inipv6address" value="{{ inipv6address }}" class="fieldspec">
+<p></p><input type="submit" name="doCalc" id="doCalc" value="Calculate">
+</form>
+
+</p>
+</td></tr></table>
+</fieldset>
+</div>
+
+<div class="logo">
+<h1>Brian McGehee IPv6 Address Utility</h1>
+<p class="version"><a href="/ipv6app/about/">version 1.1</a><br>
+<p><a href="/ipv6app/">How to use this</a></p>
+Feedback, suggestions, bugs...<br>email: <a href="mailto:doc@tavian.com"> doc@tavian.com</a><br>
+</div>
+{% autoescape off %}
+{{ testrow }}
+{{ testrow2 }}
+{{ starttable1 }} TESTING {{ closetable2 }}
+{{ inipv6address }}
+{% endautoescape %}
+</body>
+</html>

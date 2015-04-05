@@ -1,0 +1,141 @@
+html {
+	margin: 0px;
+	padding: 0px;
+}
+body { 
+	background-repeat: repeat
+	text-color: #000000;
+	margin: 0px; 
+	padding: 0px;
+}
+li { 
+	font: 10pt courier; 
+	margin-top: 0px; 
+	text-align: left;
+}
+p { 
+	font: 10pt courier; 
+	margin-top: 0px; 
+	text-align: left;
+}
+.divoptions {
+	position: absolute;
+	top: 16px;
+	left: 22px;
+}
+
+.feedback {
+	position: absolute;
+	top: 144px;
+	left: 22px;
+	margin: 0px;
+	padding: 0px;
+}
+
+.info {
+	position: absolute;
+	top: 146px;
+	left: 26px;
+	margin: 0px;
+	padding: 0px;
+	font: 13pt arial; 
+}
+
+.logo {
+	position: absolute;
+	top: 22px;
+	left: 420px;
+	font: 10pt courier;
+	margin-top: 0px;
+	text-align: left;
+}
+
+.formclass1 {
+	width: 339px;
+	height: 44px;
+}
+
+.fieldspec {
+	width: 300;
+	border: 1px;
+	background-color: #ffff00;
+	color: #0000ff;
+	font-weight: bold;
+	font-size: 10pt;
+}
+
+.tableclass1 {
+	font: 8pt courier; 
+	background-color: #ffff00;
+	margin-top: 0px; 
+	text-align: left;
+}
+
+.version {
+	font: 8pt courier; 
+	margin-top: 0px; 
+	text-align: left;
+}
+
+.trclass1 {
+	margin-top: 0px; 
+}
+
+.trclass3 {
+	margin-top: 0px;
+	text-align: center;
+}
+
+.tdclass1 {
+	margin-top: 0px; 
+	text-align: right;
+	background-color: #ffff00;
+}
+
+.tdclass2 {
+	margin-top: 0px; 
+	text-align: left;
+	background-color: #ffff00;
+}
+
+.tdclass2a {
+	margin-top: 0px; 
+	text-align: left;
+	background-color: #999900;
+}
+
+.tdclass3 {
+	margin-top: 0px;
+	text-align: center;
+	background-color: #ffff00;
+}
+
+.tdclass4 {
+	margin-top: 0px;
+	text-align: center;
+	background-color: #ffff00;
+}
+	
+h1 {
+	COLOR: #000000;
+	FONT-FAMILY: sans;
+	FONT-WEIGHT: bold;	
+	FONT-SIZE: 18px;
+ 	margin: 0px;
+}
+
+a:link { 
+	text-decoration: underline; 
+	color: #FF0000;
+}
+
+a:visited { 
+	text-decoration: underline; 
+	color: #FF2222;
+}
+
+a:hover, a:active { 
+	text-decoration: none; 
+	color: #444444;
+}
+
