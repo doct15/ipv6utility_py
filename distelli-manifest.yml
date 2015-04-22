@@ -23,7 +23,7 @@ bmcgehee/ipv6utility:
     - 'sudo apt-get -y install libmysqlclient-dev'
     - 'sudo apt-get -y install python-dev'
     - 'sudo apt-get -y install python-pip'
-    - mysql -u root -p$MYSQL_ROOT -e 'create database ipv6_prefixes; GRANT ALL PRIVILEGES ON ipv6_prefixes.* TO doc@localhost IDENTIFIED BY "$DB_USER_PWD"'
+    - mysql -u root -p$MYSQL_ROOT -e 'create database ipv6_prefixes; GRANT ALL PRIVILEGES ON ipv6_prefixes.* TO doc@localhost IDENTIFIED BY "'$DB_USER_PWD'"'
     - 'sudo pip install Django'
     - 'sudo install MySQL-python'
 
