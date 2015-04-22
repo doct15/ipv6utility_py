@@ -22,8 +22,8 @@ bmcgehee/ipv6utility:
     - 'sudo apt-get -y install python-dev'
     - 'sudo apt-get -y install python-pip'
     - mysql -u root -ppa55w0rd -e 'create database ipv6_prefixes; GRANT ALL PRIVILEGES ON ipv6_prefixes.* TO doc@localhost IDENTIFIED BY "pa55w0rd"'
-    - 'sudo pip install Django'
-    - 'sudo pip install MySQL-python'
+    - 'pip install Django'
+    - 'pip install MySQL-python'
 
   Install:
     - 'echo "Starting Install for IPv6Utility"'
