@@ -6,11 +6,9 @@ bmcgehee/ipv6utility_py:
     - MYSQL_ROOT: "pa55w0rd"
     - DB_USER_PWD: "pa55w0rd"
 
-  #PkgInclude:
-  #  - "/*/"
-  #PkgExclude:
-  #  - "*.py~"
-  #  - "*.pyc"
+  PkgInclude:
+    - "/*/"
+  
   CommitData:
     - RepoType: Git
     - RepoPath: .
