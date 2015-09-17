@@ -11,9 +11,9 @@ bmcgehee/ipv6utility_py:
   PkgInclude:
     - "/*/"
   
-  #CommitData:
-  #  - RepoType: Git
-  #  - RepoPath: .
+  CommitData:
+    - RepoType: Git
+    - RepoPath: "."
     
   PreInstall:
     - 'echo "Starting PreInstall for IPv6Utility"'
