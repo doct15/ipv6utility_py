@@ -13,7 +13,7 @@ bmcgehee/ipv6utility_py:
   
   CommitData:
     - RepoType: Git
-    - RepoPath: "."
+    - RepoPath: .
     
   PreInstall:
     - 'echo "Starting PreInstall for IPv6Utility"'
