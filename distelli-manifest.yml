@@ -1,4 +1,4 @@
-bmcgehee/ipv6utility:
+bmcgehee/ipv6utility_py:
   Type: Python
   OS: Ubuntu
   Env:
