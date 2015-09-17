@@ -1,6 +1,6 @@
 bmcgehee/ipv6utility_py:
-  Type: Python
-  OS: Ubuntu
+  #Type: Python
+  #OS: Ubuntu
   Env:
     - PORT: 8000
     - MYSQL_ROOT: "pa55w0rd"
