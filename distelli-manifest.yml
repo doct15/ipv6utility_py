@@ -2,8 +2,8 @@ bmcgehee/ipv6utility_py:
 
   Env:
     - PORT: '8000'
-    - MYSQL_ROOT: "pa55w0rd"
-    - DB_USER_PWD: "pa55w0rd"
+    - MYSQL_ROOT: "SET_IN_DISTELLI_ENV_VARIABLES"
+    - DB_USER_PWD: "SET_IN_DISTELLI_ENV_VARIABLES"
   
   PreRelease:
     - echo "Nothing to Build"
