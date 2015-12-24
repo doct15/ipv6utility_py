@@ -9,7 +9,7 @@ bmcgehee2/ipv6-2:
     - echo "Nothing to Build"
 
   PkgInclude:
-    - "/*/"
+    - '*'
   
   CommitData:
     - RepoType: Git
