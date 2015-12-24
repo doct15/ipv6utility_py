@@ -13,7 +13,7 @@ bmcgehee2/ipv6-2:
   
   CommitData:
     - RepoType: Git
-    - RepoPath: .
+    - RepoPath: . 
     
   PreInstall:
     - 'echo "Starting PreInstall for IPv6Utility"'
