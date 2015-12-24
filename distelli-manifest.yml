@@ -29,7 +29,7 @@ bmcgehee2/ipv6-2:
 
   Install:
     - 'echo "Starting Install for IPv6Utility"' 
-    
+     
   PostInstall:
     - 'echo "Starting PostInstall for IPv6Utility"'
     - 'python manage.py migrate'
