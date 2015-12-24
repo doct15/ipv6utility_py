@@ -28,7 +28,7 @@ bmcgehee2/ipv6-2:
     - 'sudo pip install MySQL-python' 
 
   Install:
-    - 'echo "Starting Install for IPv6Utility"'
+    - 'echo "Starting Install for IPv6Utility"' 
     
   PostInstall:
     - 'echo "Starting PostInstall for IPv6Utility"'
