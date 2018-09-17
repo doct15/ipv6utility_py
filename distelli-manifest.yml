@@ -25,9 +25,6 @@ bmcgehee/ipv6utility_py:
     - mysql -u root -p$MYSQL_ROOT -e 'create database ipv6_prefixes; GRANT ALL PRIVILEGES ON ipv6_prefixes.* TO doc@localhost IDENTIFIED BY "'$DB_USER_PWD'"'
     - 'sudo pip install Django'
     - 'sudo pip install MySQL-python'  
-
-  Install:
-    - 'echo "Starting Install for IPv6Utility"'  
      
   PostInstall:
     - 'echo "Starting PostInstall for IPv6Utility"'
