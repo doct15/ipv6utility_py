@@ -20,7 +20,7 @@ p {
 }
 .divOptions {
 	position: absolute;
-	top: 16px;
+	top: 100px;
 	left: 22px;
 }
 
@@ -44,7 +44,7 @@ p {
 .logo {
 	position: absolute;
 	top: 22px;
-	left: 420px;
+	left: 20px;
 	font: 10pt courier;
 	margin-top: 0px;
 	text-align: left;
